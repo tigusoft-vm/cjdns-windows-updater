@@ -3,6 +3,6 @@
 
 int main() {
 	c_url_downloader downloader;
-	downloader.download_file("127.0.0.1", "cjdroute.exe");
+	downloader.download_file("127.0.0.1", "out");
     return 0;
 }
