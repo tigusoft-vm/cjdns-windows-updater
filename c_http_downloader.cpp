@@ -1,11 +1,11 @@
-#include "c_url_downloader.hpp"
+#include "c_http_downloader.hpp"
 #include <array>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <boost/asio.hpp>
 
-void c_url_downloader::download_file(const std::string &file_address, const std::string &out_path) {
+void c_http_downloader::download_file(const std::string &file_address, const std::string &out_path) {
 	using namespace boost::asio;
 
 	io_service io_servise;
@@ -17,8 +17,7 @@ void c_url_downloader::download_file(const std::string &file_address, const std:
 		ip::tcp::socket socket = ip::tcp::socket(io_servise);
 		boost::asio::connect(socket, resolver.resolve(query));
 
-// 		const std::string request = generate_request("127.0.0.1", "cjdroute.exe");
-		const std::string request = generate_request("127.0.0.1", "index.html"); // TODO parse
+		const std::string request = generate_request("127.0.0.1", "index.html");
 		socket.write_some(boost::asio::buffer(request));
 
 		// read data
@@ -43,7 +42,7 @@ void c_url_downloader::download_file(const std::string &file_address, const std:
 
 }
 
-std::string c_url_downloader::generate_request(const std::string &hostname, const std::string &path) {
+std::string c_http_downloader::generate_request(const std::string &hostname, const std::string &path) {
 	std::ostringstream oss;
 	oss
 		<< "GET /" << path << "\r\n"
