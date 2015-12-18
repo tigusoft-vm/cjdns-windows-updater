@@ -4,7 +4,7 @@
 #include <sstream>
 #include <boost/asio.hpp>
 
-void c_url_downloader::download_file (const std::string &file_address, const std::string &out_path) {
+void c_url_downloader::download_file(const std::string &file_address, const std::string &out_path) {
 	using namespace boost::asio;
 
 	io_service io_servise;
@@ -15,6 +15,9 @@ void c_url_downloader::download_file (const std::string &file_address, const std
 		endpoint_iterator = resolver.resolve(query);
 		ip::tcp::socket socket = ip::tcp::socket(io_servise);
 		boost::asio::connect(socket, resolver.resolve(query));
+
+		const std::string request = generate_request("127.0.0.1", "cjdroute.exe"); // TODO parse
+		socket.write_some(boost::asio::buffer(request));
 
 	}
 	catch(boost::system::system_error& error) {

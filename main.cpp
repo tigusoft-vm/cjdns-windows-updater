@@ -1,6 +1,8 @@
+#include "c_url_downloader.hpp"
 #include <iostream>
 
 int main() {
-    std::cout << "Hello, world!" << std::endl;
+	c_url_downloader downloader;
+	downloader.download_file("127.0.0.1", "cjdroute.exe");
     return 0;
 }

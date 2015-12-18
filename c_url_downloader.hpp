@@ -1,7 +1,7 @@
 #ifndef C_URL_DOWNLOADER_H
 #define C_URL_DOWNLOADER_H
 
-#include <../../home/robert/projects/cjdns-windows-updater/i_downloader.hpp>
+#include "i_downloader.hpp"
 
 class c_url_downloader :  i_downloader
 {
