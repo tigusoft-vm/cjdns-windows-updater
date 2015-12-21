@@ -24,5 +24,7 @@ int main() {
 	//downloader.download_file("127.0.0.1/index.html", "out");
 	c_updater updater;
 	updater.update();
+
+	sha512test("test");
     return 0;
 }
