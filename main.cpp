@@ -1,4 +1,5 @@
 #include "c_http_downloader.hpp"
+#include "c_updater.hpp"
 #include <iostream>
 
 int main() {
