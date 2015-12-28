@@ -1,7 +1,9 @@
 #include "c_http_downloader.hpp"
-#include <iostream>
 #include "c_sha512_ext.hpp"
 #include "c_updater.hpp"
+
+#include <iostream>
+#include <fstream>
 
 bool sha512test(const std::string msg) {
 
@@ -20,8 +22,9 @@ bool sha512test(const std::string msg) {
 }
 
 int main() {
-	//c_http_downloader downloader;
-	//downloader.download_file("127.0.0.1/index.html", "out");
+	std::ofstream ofs("out");
+	c_http_downloader downloader;
+	downloader.download_file("127.0.0.1/index.html", ofs);
 	c_updater updater;
 	updater.update();
 

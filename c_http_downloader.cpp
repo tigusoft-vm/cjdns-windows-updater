@@ -1,11 +1,11 @@
 #include "c_http_downloader.hpp"
 #include <array>
-#include <fstream>
+#include <ostream>
 #include <iostream>
 #include <sstream>
 #include <boost/asio.hpp>
 
-void c_http_downloader::download_file(const std::string &file_address, const std::string &out_path) {
+void c_http_downloader::download_file(const std::string &file_address, std::ostream &out_stream) {
 
 	try {
 		std::string::const_iterator it = file_address.begin();
@@ -39,11 +39,10 @@ void c_http_downloader::download_file(const std::string &file_address, const std
 
 		// read data
 		boost::system::error_code ec;
-		std::ofstream out_file(out_path, std::ios::out | std::ios::binary);
 		do {
 			std::array<char, 1024> buffer;
 			size_t bytesRead = socket.read_some(boost::asio::buffer(buffer), ec);
-			out_file.write(buffer.data(), bytesRead);
+			out_stream.write(buffer.data(), bytesRead);
 		}
 		while (!ec);
 
