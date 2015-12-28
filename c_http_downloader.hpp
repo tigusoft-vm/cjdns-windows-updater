@@ -8,7 +8,6 @@ class c_http_downloader :  public i_downloader
 	public:
 		/**
 		 * @param file_address remote file address, e.g 127.0.0.1/file.txt
-		 * @param out_path path to output file
 		 */
 		virtual void download_file(const std::string &file_address, std::ostream &out_stream) override;
 	private:
