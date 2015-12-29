@@ -7,5 +7,7 @@ file(GLOB source_files "src/*.cpp")
 file(GLOB source_sha "sha_src/*.cpp")
 include_directories(src)
 
+add_subdirectory(gui/updater-gui)
+
 add_executable(cjdns-windows-updater main.cpp ${source_files} ${source_sha})
 target_link_libraries(cjdns-windows-updater boost_system pthread)
