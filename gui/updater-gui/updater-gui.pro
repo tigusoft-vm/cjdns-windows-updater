@@ -16,11 +16,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     ../../src/c_http_downloader.cpp \
-    ../../src/c_updater.cpp
+    ../../src/c_updater.cpp \
+    settings_window.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    settings_window.hpp
 INCLUDEPATH += ../../src/
 
 LIBS += -lboost_system
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    settings_window.ui
