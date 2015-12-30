@@ -46,3 +46,12 @@ unsigned int c_updater::get_remote_version() {
 	unsigned int version_number = std::stoul(ver_str);
 	return version_number;
 }
+
+unsigned int c_updater::get_local_version() {
+    // TODO
+    return 0;
+}
+
+bool c_updater::check_new_version() {
+    return get_remote_version() > get_local_version();
+}

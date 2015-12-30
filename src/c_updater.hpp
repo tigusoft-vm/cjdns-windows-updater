@@ -11,6 +11,7 @@ class c_updater
 	public:
 		c_updater();
 		void update();
+        bool check_new_version(); ///< @return true if local version < server version
 	private:
 		std::unique_ptr<i_downloader> m_downloader;
 		unsigned int get_remote_version(); ///< @returns version on server
