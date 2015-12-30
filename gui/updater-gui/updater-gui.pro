@@ -7,14 +7,20 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+CONFIG += c++11
 
 TARGET = updater-gui
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    ../../src/c_http_downloader.cpp \
+    ../../src/c_updater.cpp
 
 HEADERS  += mainwindow.h
+INCLUDEPATH += ../../src/
+
+LIBS += -lboost_system
 
 FORMS    += mainwindow.ui
