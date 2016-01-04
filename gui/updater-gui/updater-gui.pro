@@ -17,13 +17,18 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     ../../src/c_http_downloader.cpp \
     ../../src/c_updater.cpp \
-    settings_window.cpp
+    settings_window.cpp \
+    c_settings.cpp
 
 HEADERS  += mainwindow.h \
-    settings_window.hpp
+    settings_window.hpp \
+    c_settings.hpp
 INCLUDEPATH += ../../src/
 
 LIBS += -lboost_system
 
 FORMS    += mainwindow.ui \
     settings_window.ui
+
+TRANSLATIONS = test_en.ts \
+            test_pl.ts

@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHeaderView>
@@ -23,6 +24,7 @@ class Ui_Settings_window
 {
 public:
     QDialogButtonBox *buttonBox;
+    QComboBox *langComboBox;
 
     void setupUi(QDialog *Settings_window)
     {
@@ -34,6 +36,9 @@ public:
         buttonBox->setGeometry(QRect(30, 240, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        langComboBox = new QComboBox(Settings_window);
+        langComboBox->setObjectName(QStringLiteral("langComboBox"));
+        langComboBox->setGeometry(QRect(10, 80, 79, 23));
 
         retranslateUi(Settings_window);
         QObject::connect(buttonBox, SIGNAL(accepted()), Settings_window, SLOT(accept()));
