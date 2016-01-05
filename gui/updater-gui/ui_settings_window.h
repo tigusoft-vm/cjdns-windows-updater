@@ -18,6 +18,7 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 
 QT_BEGIN_NAMESPACE
 
@@ -27,6 +28,7 @@ public:
     QDialogButtonBox *buttonBox;
     QComboBox *langComboBox;
     QCheckBox *autorunCheckBox;
+    QLabel *langLabel;
 
     void setupUi(QDialog *Settings_window)
     {
@@ -40,10 +42,13 @@ public:
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         langComboBox = new QComboBox(Settings_window);
         langComboBox->setObjectName(QStringLiteral("langComboBox"));
-        langComboBox->setGeometry(QRect(60, 80, 79, 23));
+        langComboBox->setGeometry(QRect(40, 90, 79, 23));
         autorunCheckBox = new QCheckBox(Settings_window);
         autorunCheckBox->setObjectName(QStringLiteral("autorunCheckBox"));
         autorunCheckBox->setGeometry(QRect(210, 80, 85, 21));
+        langLabel = new QLabel(Settings_window);
+        langLabel->setObjectName(QStringLiteral("langLabel"));
+        langLabel->setGeometry(QRect(40, 70, 71, 16));
 
         retranslateUi(Settings_window);
         QObject::connect(buttonBox, SIGNAL(accepted()), Settings_window, SLOT(accept()));
@@ -57,9 +62,10 @@ public:
         Settings_window->setWindowTitle(QApplication::translate("Settings_window", "Dialog", 0));
         langComboBox->clear();
         langComboBox->insertItems(0, QStringList()
-         << QApplication::translate("Settings_window", "en_EN", 0)
+         << QApplication::translate("Settings_window", "English", 0)
         );
         autorunCheckBox->setText(QApplication::translate("Settings_window", "Auto run", 0));
+        langLabel->setText(QApplication::translate("Settings_window", "Language", 0));
     } // retranslateUi
 
 };

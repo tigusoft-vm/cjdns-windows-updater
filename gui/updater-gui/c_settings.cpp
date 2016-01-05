@@ -1,4 +1,5 @@
 #include "c_settings.hpp"
+#include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
@@ -14,6 +15,9 @@ c_settings &c_settings::getInstance() {
 }
 
 void c_settings::load_settings(const std::string &file_path) {
+    if (!boost::filesystem::exists(file_path)) {
+        return;
+    }
     using namespace boost::property_tree;
     ptree tree;
     read_xml(file_path, tree);

@@ -25,7 +25,8 @@ HEADERS  += mainwindow.h \
     c_settings.hpp
 INCLUDEPATH += ../../src/
 
-LIBS += -lboost_system
+LIBS += -lboost_system \
+    -lboost_filesystem
 
 FORMS    += mainwindow.ui \
     settings_window.ui
