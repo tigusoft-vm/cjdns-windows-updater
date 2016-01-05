@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
@@ -25,6 +26,7 @@ class Ui_Settings_window
 public:
     QDialogButtonBox *buttonBox;
     QComboBox *langComboBox;
+    QCheckBox *autorunCheckBox;
 
     void setupUi(QDialog *Settings_window)
     {
@@ -38,7 +40,10 @@ public:
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         langComboBox = new QComboBox(Settings_window);
         langComboBox->setObjectName(QStringLiteral("langComboBox"));
-        langComboBox->setGeometry(QRect(10, 80, 79, 23));
+        langComboBox->setGeometry(QRect(60, 80, 79, 23));
+        autorunCheckBox = new QCheckBox(Settings_window);
+        autorunCheckBox->setObjectName(QStringLiteral("autorunCheckBox"));
+        autorunCheckBox->setGeometry(QRect(210, 80, 85, 21));
 
         retranslateUi(Settings_window);
         QObject::connect(buttonBox, SIGNAL(accepted()), Settings_window, SLOT(accept()));
@@ -50,6 +55,7 @@ public:
     void retranslateUi(QDialog *Settings_window)
     {
         Settings_window->setWindowTitle(QApplication::translate("Settings_window", "Dialog", 0));
+        autorunCheckBox->setText(QApplication::translate("Settings_window", "Auto run", 0));
     } // retranslateUi
 
 };
