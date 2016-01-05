@@ -15,7 +15,8 @@ class c_settings
         static c_settings& getInstance();
 
         std::string language;
-    private:
+        bool autorun;
+
         void load_settings(const std::string &file_path);
         void save_settings(const std::string &file_path);
 };
