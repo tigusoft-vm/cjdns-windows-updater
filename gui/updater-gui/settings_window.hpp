@@ -20,6 +20,7 @@ private slots:
 
 private:
     Ui::Settings_window *ui;
+    void showEvent(QShowEvent *event) override;
 };
 
 #endif // SETTINGS_WINDOW_HPP
