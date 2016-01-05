@@ -38,6 +38,11 @@
      <height>23</height>
     </rect>
    </property>
+   <item>
+    <property name="text">
+     <string>en_EN</string>
+    </property>
+   </item>
   </widget>
   <widget class="QCheckBox" name="autorunCheckBox">
    <property name="geometry">

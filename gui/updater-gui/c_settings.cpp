@@ -2,7 +2,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-c_settings::c_settings()
+c_settings::c_settings() :
+    language("en_EN"),
+    autorun(true)
 {
 }
 
