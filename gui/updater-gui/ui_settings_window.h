@@ -60,10 +60,6 @@ public:
     void retranslateUi(QDialog *Settings_window)
     {
         Settings_window->setWindowTitle(QApplication::translate("Settings_window", "Dialog", 0));
-        langComboBox->clear();
-        langComboBox->insertItems(0, QStringList()
-         << QApplication::translate("Settings_window", "English", 0)
-        );
         autorunCheckBox->setText(QApplication::translate("Settings_window", "Auto run", 0));
         langLabel->setText(QApplication::translate("Settings_window", "Language", 0));
     } // retranslateUi

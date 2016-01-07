@@ -31,5 +31,5 @@ LIBS += -lboost_system \
 FORMS    += mainwindow.ui \
     settings_window.ui
 
-TRANSLATIONS = test_en.ts \
-            test_pl.ts
+TRANSLATIONS = language/EN.ts \
+            language/PL.ts
