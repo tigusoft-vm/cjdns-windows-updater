@@ -8,6 +8,7 @@ class c_settings
 {
     private:
         c_settings();
+        void load_languages();
     public:
         c_settings(const c_settings &) = delete;
         void operator= (const c_settings &) = delete;

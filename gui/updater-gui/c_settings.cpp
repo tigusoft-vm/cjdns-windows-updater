@@ -2,11 +2,40 @@
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+#include <QString>
+
+#define LANG_DIR_NAME "language"
 
 c_settings::c_settings() :
     language("en_EN"),
     autorun(true)
 {
+}
+
+void c_settings::load_languages() {
+    namespace fs = boost::filesystem;
+    fs::path lang_dir(LANG_DIR_NAME);
+    fs::directory_iterator end_iter;
+    if (fs::exists(lang_dir) && fs::is_directory(lang_dir)) {
+        // for each file in directory
+        for (fs::directory_iterator dir_it(lang_dir); dir_it != end_iter; ++dir_it) {
+            if (fs::is_regular_file(dir_it->status())) {
+                std::string lang_file_path(dir_it->path().generic_string());
+                if (lang_file_path.size() < 3) continue;
+                // check last 3 chars
+                std::string extension(lang_file_path.substr(lang_file_path.size() - 3));
+                if (extension != ".qm") continue;
+
+                // lang_file_path == e.g. language/EN.qm
+                // generate short name for combobox
+                QString short_name = QString::fromStdString(lang_file_path);
+                short_name.remove(0, std::strlen(LANG_DIR_NAME) + 1); // remove LANG_DIR_NAME + '/' char
+                short_name.remove(short_name.size() - 3, 3); // remove last 3 chars (.qm)
+                //ui->langComboBox->addItem(short_name);
+                //m_lang_files_map.emplace(short_name, lang_file_path);
+            }
+        }
+    }
 }
 
 c_settings &c_settings::getInstance() {
