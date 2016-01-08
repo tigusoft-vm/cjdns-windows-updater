@@ -3,9 +3,9 @@
 #include "ui_settings_window.h"
 
 #include <boost/filesystem.hpp>
-#include <iostream>
+#include <utility>
 
-#define SETTINGS_FILE "settings.xml"
+#define SETTINGS_FILE "settings.xml" // TODO %APPDATA%
 #define LANG_DIR_NAME "language"
 
 Settings_window::Settings_window(QWidget *parent) :
@@ -24,12 +24,15 @@ Settings_window::Settings_window(QWidget *parent) :
                 if (lang_file_path.size() < 3) continue;
                 // check last 3 chars
                 std::string extension(lang_file_path.substr(lang_file_path.size() - 3));
-                std::cout << "lang_file_path " << lang_file_path << std::endl;
-                std::cout << "extension " << extension << std::endl;
                 if (extension != ".qm") continue;
 
+                // lang_file_path == e.g. language/EN.qm
+                // generate short name for combobox
                 QString short_name = QString::fromStdString(lang_file_path);
-                ui->langComboBox->addItem(QString::fromStdString(lang_file_path));
+                short_name.remove(0, std::strlen(LANG_DIR_NAME) + 1); // remove LANG_DIR_NAME + '/' char
+                short_name.remove(short_name.size() - 3, 3); // remove last 3 chars (.qm)
+                ui->langComboBox->addItem(short_name);
+                m_lang_files_map.emplace(short_name, lang_file_path);
             }
         }
     }

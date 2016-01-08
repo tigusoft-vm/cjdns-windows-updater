@@ -23,8 +23,8 @@ private slots:
 private:
     Ui::Settings_window *ui;
     void showEvent(QShowEvent *event) override;
-    // short name dispalyed on combobox => lang file path
-    std::map<QString, std::string> m_lang_files_map;
+
+    std::map<QString, std::string> m_lang_files_map; ///< short name dispalyed on combobox => lang file path
 };
 
 #endif // SETTINGS_WINDOW_HPP
