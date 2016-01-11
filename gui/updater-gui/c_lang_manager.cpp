@@ -40,6 +40,7 @@ std::string c_lang_manager::get_current_language() const {
 void c_lang_manager::set_current_language(const std::string &language) {
     std::cout << "set_current_language (" << language << ")" << std::endl;
     if (language == m_current_language) return;
+    m_current_language = language;
     if (language.empty()) return;
     if (m_lang_files_map.find(language) == m_lang_files_map.end()) {
         throw std::out_of_range("Language not found");

@@ -28,8 +28,7 @@ void Settings_window::changeEvent(QEvent *event) {
     }
 }
 
-void Settings_window::on_buttonBox_accepted()
-{
+void Settings_window::on_buttonBox_accepted() {
     c_settings::getInstance().autorun = ui->autorunCheckBox->isChecked();
     std::cout << "Lang from combobox " << ui->langComboBox->currentData().toString().toStdString() << std::endl;
     c_settings::getInstance().lang_manager->set_current_language(ui->langComboBox->currentText().toStdString());
