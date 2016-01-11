@@ -9,9 +9,9 @@ Settings_window::Settings_window(QWidget *parent) :
     ui(new Ui::Settings_window)
 {
     ui->setupUi(this);
-    for (const auto &lang : c_settings::getInstance().lang_files_map) {
-        ui->langComboBox->addItem(QString::fromStdString(lang.first));
-    }
+    //for (const auto &lang : c_settings::getInstance().lang_files_map) {
+    //    ui->langComboBox->addItem(QString::fromStdString(lang.first));
+    //}
 }
 
 Settings_window::~Settings_window()
