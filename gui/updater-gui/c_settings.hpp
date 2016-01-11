@@ -18,7 +18,7 @@ class c_settings
         static c_settings& getInstance();
 
         std::string current_language; ///< short name e.g. EN
-        std::map<std::string, std::string> m_lang_files_map; ///< short name to display => lang file path
+        std::map<std::string, std::string> lang_files_map; ///< short name to display => lang file path
 
         bool autorun;
 

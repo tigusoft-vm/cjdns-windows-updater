@@ -32,7 +32,7 @@ void c_settings::load_languages() {
                 std::string short_name = lang_file_path;
                 short_name.erase(0, std::strlen(LANG_DIR_NAME) + 1); // remove LANG_DIR_NAME + '/' char
                 short_name.erase(short_name.size() - 3, 3); // remove last 3 chars (.qm)
-                m_lang_files_map.emplace(short_name, lang_file_path);
+                lang_files_map.emplace(short_name, lang_file_path);
             }
         }
     }
