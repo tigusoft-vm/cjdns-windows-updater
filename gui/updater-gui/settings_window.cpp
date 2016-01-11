@@ -2,6 +2,8 @@
 #include "c_settings.hpp"
 #include "ui_settings_window.h"
 
+#include <iostream>
+
 #define SETTINGS_FILE "settings.xml" // TODO %APPDATA%
 
 Settings_window::Settings_window(QWidget *parent) :
@@ -22,8 +24,9 @@ Settings_window::~Settings_window()
 void Settings_window::on_buttonBox_accepted()
 {
     c_settings::getInstance().autorun = ui->autorunCheckBox->isChecked();
+    std::cout << "Lang from combobox " << ui->langComboBox->currentData().toString().toStdString() << std::endl;
+    c_settings::getInstance().lang_manager->set_current_language(ui->langComboBox->currentText().toStdString());
     c_settings::getInstance().save_settings(SETTINGS_FILE);
-
 }
 
 void Settings_window::showEvent(QShowEvent *event) {

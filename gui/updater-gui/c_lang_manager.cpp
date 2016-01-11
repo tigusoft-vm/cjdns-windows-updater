@@ -1,5 +1,7 @@
 #include "c_lang_manager.h"
 #include <boost/filesystem.hpp>
+#include <exception>
+#include <iostream>
 
 #define LANG_DIR_NAME "language"
 
@@ -35,9 +37,18 @@ std::string c_lang_manager::get_current_language() const {
     return m_current_language;
 }
 
-void c_lang_manager::set_current_language(const std::string &language) { // TODO
+void c_lang_manager::set_current_language(const std::string &language) {
+    std::cout << "set_current_language (" << language << ")" << std::endl;
     if (language == m_current_language) return;
-
+    if (language.empty()) return;
+    if (m_lang_files_map.find(language) == m_lang_files_map.end()) {
+        throw std::out_of_range("Language not found");
+    }
+    std::shared_ptr<QApplication> app(m_qapplication);
+    app->removeTranslator(&m_qtranslator);
+    if (m_qtranslator.load(QString::fromStdString(m_lang_files_map.at(language)))) {
+        app->installTranslator(&m_qtranslator);
+    }
 }
 
 const std::map<std::string, std::string>& c_lang_manager::get_lang_map() const {
