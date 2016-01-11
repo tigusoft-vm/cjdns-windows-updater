@@ -43,6 +43,13 @@ c_settings &c_settings::getInstance() {
     return instance;
 }
 
+void c_settings::load_lang_file(const std::string &lang_short) {
+    if (lang_short != current_language) {
+        current_language = lang_short;
+
+    }
+}
+
 void c_settings::load_settings(const std::string &file_path) {
     if (!boost::filesystem::exists(file_path)) {
         return;

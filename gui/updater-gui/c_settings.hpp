@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <qtranslator.h>
 
 // singleton
 class c_settings
@@ -17,8 +18,11 @@ class c_settings
 
         static c_settings& getInstance();
 
-        std::string current_language; ///< short name e.g. EN
+        // TODO create new class for lang
+        std::string current_language; ///< short name e.g. EN, TODO private?
         std::map<std::string, std::string> lang_files_map; ///< short name to display => lang file path
+        QTranslator qtranslator;
+        void load_lang_file(const std::string &lang_short); ///< load qm file
 
         bool autorun;
 

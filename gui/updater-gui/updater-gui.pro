@@ -18,11 +18,13 @@ SOURCES += main.cpp\
     ../../src/c_http_downloader.cpp \
     ../../src/c_updater.cpp \
     settings_window.cpp \
-    c_settings.cpp
+    c_settings.cpp \
+    c_lang_manager.cpp
 
 HEADERS  += mainwindow.h \
     settings_window.hpp \
-    c_settings.hpp
+    c_settings.hpp \
+    c_lang_manager.h
 INCLUDEPATH += ../../src/
 
 LIBS += -lboost_system \
