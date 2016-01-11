@@ -18,6 +18,9 @@ public:
     explicit MainWindow(std::shared_ptr<c_updater> updater_ptr, QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    void changeEvent(QEvent *event);
+
 private slots:
     void on_settingsButton_clicked();
 

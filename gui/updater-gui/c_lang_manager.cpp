@@ -44,6 +44,7 @@ void c_lang_manager::set_current_language(const std::string &language) {
     if (m_lang_files_map.find(language) == m_lang_files_map.end()) {
         throw std::out_of_range("Language not found");
     }
+    std::cout << "translate using " << m_lang_files_map.at(language) << std::endl;
     std::shared_ptr<QApplication> app(m_qapplication);
     app->removeTranslator(&m_qtranslator);
     if (m_qtranslator.load(QString::fromStdString(m_lang_files_map.at(language)))) {

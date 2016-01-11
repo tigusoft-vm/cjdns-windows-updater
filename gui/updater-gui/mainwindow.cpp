@@ -16,6 +16,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::changeEvent(QEvent *event) {
+    if (event == nullptr) return;
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}
+
 void MainWindow::on_settingsButton_clicked()
 {
     m_setting_window->show();

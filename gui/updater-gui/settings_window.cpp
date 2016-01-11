@@ -21,6 +21,13 @@ Settings_window::~Settings_window()
     delete ui;
 }
 
+void Settings_window::changeEvent(QEvent *event) {
+    if (event == nullptr) return;
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+}
+
 void Settings_window::on_buttonBox_accepted()
 {
     c_settings::getInstance().autorun = ui->autorunCheckBox->isChecked();

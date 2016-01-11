@@ -16,6 +16,9 @@ public:
     explicit Settings_window(QWidget *parent = 0);
     ~Settings_window();
 
+protected:
+    void changeEvent(QEvent *event);
+
 private slots:
     void on_buttonBox_accepted();
 
