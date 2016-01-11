@@ -27,14 +27,16 @@ void c_settings::load_settings(const std::string &file_path) {
     using namespace boost::property_tree;
     ptree tree;
     read_xml(file_path, tree);
-    // TODO tree.get("settings.lang", current_language);
+    std::string current_language;
+    tree.get("settings.lang", current_language);
+    lang_manager->set_current_language(current_language);
     tree.get("settings.autorun", autorun);
 }
 
 void c_settings::save_settings(const std::string &file_path) {
     using namespace boost::property_tree;
     ptree tree;
-    // TODO tree.put("settings.lang", current_language);
+    tree.put("settings.lang", lang_manager->get_current_language());
     tree.put("settings.autorun", autorun);
     write_xml(file_path, tree);
 }
