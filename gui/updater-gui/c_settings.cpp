@@ -7,9 +7,10 @@
 #define LANG_DIR_NAME "language"
 
 c_settings::c_settings() :
-    language("en_EN"),
+    current_language("EN"),
     autorun(true)
 {
+    load_languages();
 }
 
 void c_settings::load_languages() {
@@ -28,11 +29,10 @@ void c_settings::load_languages() {
 
                 // lang_file_path == e.g. language/EN.qm
                 // generate short name for combobox
-                QString short_name = QString::fromStdString(lang_file_path);
-                short_name.remove(0, std::strlen(LANG_DIR_NAME) + 1); // remove LANG_DIR_NAME + '/' char
-                short_name.remove(short_name.size() - 3, 3); // remove last 3 chars (.qm)
-                //ui->langComboBox->addItem(short_name);
-                //m_lang_files_map.emplace(short_name, lang_file_path);
+                std::string short_name = lang_file_path;
+                short_name.erase(0, std::strlen(LANG_DIR_NAME) + 1); // remove LANG_DIR_NAME + '/' char
+                short_name.erase(short_name.size() - 3, 3); // remove last 3 chars (.qm)
+                m_lang_files_map.emplace(short_name, lang_file_path);
             }
         }
     }
@@ -50,14 +50,14 @@ void c_settings::load_settings(const std::string &file_path) {
     using namespace boost::property_tree;
     ptree tree;
     read_xml(file_path, tree);
-    tree.get("settings.lang", language);
+    tree.get("settings.lang", current_language);
     tree.get("settings.autorun", autorun);
 }
 
 void c_settings::save_settings(const std::string &file_path) {
     using namespace boost::property_tree;
     ptree tree;
-    tree.put("settings.lang", language);
+    tree.put("settings.lang", current_language);
     tree.put("settings.autorun", autorun);
     write_xml(file_path, tree);
 }

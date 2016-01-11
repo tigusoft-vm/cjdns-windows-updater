@@ -19,7 +19,7 @@ Settings_window::~Settings_window()
 void Settings_window::on_buttonBox_accepted()
 {
     c_settings::getInstance().autorun = ui->autorunCheckBox->isChecked();
-    c_settings::getInstance().language = ui->langComboBox->currentText().toStdString();
+    //c_settings::getInstance().current_language = ui->langComboBox->currentText().toStdString(); TODO
     c_settings::getInstance().save_settings(SETTINGS_FILE);
 }
 
