@@ -12,7 +12,6 @@ class c_settings
 {
     private:
         c_settings();
-        void load_languages();
 
     public:
         c_settings(const c_settings &) = delete;
@@ -23,8 +22,8 @@ class c_settings
         bool autorun;
         std::unique_ptr<c_lang_manager> lang_manager;
 
-        void load_settings(const std::string &file_path);
-        void save_settings(const std::string &file_path);
+        void load_settings(const std::string &file_path = "settings.xml");
+        void save_settings(const std::string &file_path = "settings.xml");
 };
 
 #endif // C_SETTINGS_HPP

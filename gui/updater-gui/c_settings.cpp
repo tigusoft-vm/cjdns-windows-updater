@@ -2,17 +2,12 @@
 #include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+#include <iostream>
 #include <QString>
 
 c_settings::c_settings() :
-    //current_language("EN"),
     autorun(true)
 {
-    load_languages();
-}
-
-void c_settings::load_languages() {
-
 }
 
 c_settings &c_settings::getInstance() {
@@ -28,9 +23,15 @@ void c_settings::load_settings(const std::string &file_path) {
     ptree tree;
     read_xml(file_path, tree);
     std::string current_language;
-    tree.get("settings.lang", current_language);
+
+    current_language = tree.get<std::string>("settings.lang");
     lang_manager->set_current_language(current_language);
-    tree.get("settings.autorun", autorun);
+
+    autorun = tree.get("settings.autorun", true);
+
+    std::cout << "*****" << std::endl;
+    std::cout << "c_settings::load_settings" << " current_language " << current_language << std::endl;
+    std::cout << "c_settings::load_settings" << " autorun " << autorun << std::endl;
 }
 
 void c_settings::save_settings(const std::string &file_path) {
