@@ -4,6 +4,7 @@
 #include "c_updater.hpp"
 #include <string>
 #include <windows.h>
+#include <winreg.h>
 #include <winsvc.h>
 
 class c_cjdns_updater : public c_updater {
@@ -12,6 +13,7 @@ class c_cjdns_updater : public c_updater {
 	private:
 		void stop_cjdns_service();
 		void start_cjdns_service();
+		std::wstring get_register_value(HKEY root, const std::string &key, const std::string &name);
 		const std::string m_service_name = "cjdns";
 };
 
