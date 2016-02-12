@@ -10,9 +10,10 @@ class c_updater
 {
 	public:
 		c_updater();
-		void update();
+		virtual void update();
         bool check_new_version(); ///< @return true if local version < server version
-	private:
+		virtual ~c_updater() = default;
+	protected:
 		std::unique_ptr<i_downloader> m_downloader;
 		unsigned int get_remote_version(); ///< @returns version on server
 		unsigned int get_local_version(); ///< @returns local version
