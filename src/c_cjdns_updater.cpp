@@ -6,6 +6,7 @@
 
 void c_cjdns_updater::update() {
 	stop_cjdns_service();
+	start_cjdns_service();
 }
 
 void c_cjdns_updater::stop_cjdns_service() {
@@ -28,6 +29,24 @@ void c_cjdns_updater::stop_cjdns_service() {
         QueryServiceStatus(SHandle, &status);
     }
 	while(status.dwCurrentState != SERVICE_STOPPED);
+
+	CloseServiceHandle(SCManager);
+	CloseServiceHandle(SHandle);
+}
+
+void c_cjdns_updater::start_cjdns_service() {
+	SC_HANDLE SCManager = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
+	if (GetLastError() == ERROR_ACCESS_DENIED) {
+		throw std::runtime_error("ERROR_ACCESS_DENIED");
+	}
+	SC_HANDLE SHandle = OpenService(SCManager, m_service_name.c_str(), SC_MANAGER_ALL_ACCESS);
+	if (SHandle == nullptr) {
+		throw std::runtime_error("open service error");
+	}
+
+	if(!StartService(SHandle, 0, NULL)) {
+		throw std::runtime_error("start service error");
+	}
 
 	CloseServiceHandle(SCManager);
 	CloseServiceHandle(SHandle);
