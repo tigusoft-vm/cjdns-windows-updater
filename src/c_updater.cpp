@@ -5,6 +5,21 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
+
+
+#ifdef __CYGWIN__
+#include <sstream>
+namespace std {
+unsigned int stol(const std::string &str) {
+    std::stringstream stream;
+	stream.str(str);
+	unsigned int ret;
+	stream >> ret;
+	return ret;
+}
+} // namespace std
+#endif
 
 c_updater::c_updater() :
 	m_downloader(new c_http_downloader)
@@ -43,7 +58,7 @@ unsigned int c_updater::get_remote_version() {
 		}
 		it++;
 	}
-	unsigned int version_number = std::stoul(ver_str);
+	unsigned int version_number = std::stol(ver_str);
 	return version_number;
 }
 
