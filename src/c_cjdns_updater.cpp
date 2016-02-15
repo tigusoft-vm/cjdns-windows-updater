@@ -6,9 +6,10 @@
 #include <thread>
 
 void c_cjdns_updater::update() {
-	std::cout << get_register_value(HKEY_LOCAL_MACHINE, R"(SYSTEM\ControlSet001\services\cjdns)", "ImagePath") << std::endl;
+	//std::cout << get_register_value(HKEY_LOCAL_MACHINE, R"(SYSTEM\ControlSet001\services\cjdns)", "ImagePath") << std::endl;
 	//stop_cjdns_service();
 	//start_cjdns_service();
+	get_cjdns_install_path();
 }
 
 void c_cjdns_updater::stop_cjdns_service() {
@@ -52,6 +53,13 @@ void c_cjdns_updater::start_cjdns_service() {
 
 	CloseServiceHandle(SCManager);
 	CloseServiceHandle(SHandle);
+}
+
+std::string c_cjdns_updater::get_cjdns_install_path() {
+	std::string path = get_register_value(HKEY_LOCAL_MACHINE, R"(SYSTEM\ControlSet001\services\cjdns)", "ImagePath");
+	size_t pos = path.find_last_of('\\');
+	path.erase(pos);
+	return path;
 }
 
 std::string c_cjdns_updater::get_register_value(HKEY root, const std::string &key, const std::string &name) {
