@@ -13,7 +13,7 @@ class c_cjdns_updater : public c_updater {
 	private:
 		void stop_cjdns_service();
 		void start_cjdns_service();
-		std::wstring get_register_value(HKEY root, const std::string &key, const std::string &name);
+		std::string get_register_value(HKEY root, const std::string &key, const std::string &name);
 		const std::string m_service_name = "cjdns";
 };
 

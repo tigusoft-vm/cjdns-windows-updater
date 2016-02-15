@@ -6,9 +6,9 @@
 #include <thread>
 
 void c_cjdns_updater::update() {
-	std::wcout << get_register_value(HKEY_LOCAL_MACHINE, R"(SYSTEM\ControlSet001\services\cjdns)", "ImagePath") << std::endl;
-	stop_cjdns_service();
-	start_cjdns_service();
+	std::cout << get_register_value(HKEY_LOCAL_MACHINE, R"(SYSTEM\ControlSet001\services\cjdns)", "ImagePath") << std::endl;
+	//stop_cjdns_service();
+	//start_cjdns_service();
 }
 
 void c_cjdns_updater::stop_cjdns_service() {
@@ -54,37 +54,24 @@ void c_cjdns_updater::start_cjdns_service() {
 	CloseServiceHandle(SHandle);
 }
 
-std::wstring c_cjdns_updater::get_register_value(HKEY root, const std::string &key, const std::string &name) {
+std::string c_cjdns_updater::get_register_value(HKEY root, const std::string &key, const std::string &name) {
 	HKEY hKey;
 	if (RegOpenKeyEx(root, key.c_str(), 0, KEY_READ, &hKey) != ERROR_SUCCESS) {
 		throw std::runtime_error("could not open registry key");
 	}
-	DWORD type;
-	DWORD cbData;
+	DWORD type = 0;
+	DWORD cbData = 0;
 	if (RegQueryValueEx(hKey, name.c_str(), nullptr, &type, nullptr, &cbData) != ERROR_SUCCESS) {
 		RegCloseKey(hKey);
 		throw std::runtime_error("Could not read registry value");
 	}
 
-/*	if (type != REG_EXPAND_SZ) {
-		RegCloseKey(hKey);
-		std::cout << "last error: " << GetLastError() << std::endl;
-		throw std::runtime_error("Incorrect registry value type");
-	}*/
-
-	std::wstring value(cbData/sizeof(wchar_t), L'\0');
+	std::string value(cbData, '\0');
 	if (RegQueryValueEx(hKey, name.c_str(), nullptr, nullptr, reinterpret_cast<LPBYTE>(&value[0]), &cbData) != ERROR_SUCCESS) {
 		RegCloseKey(hKey);
 		throw "Could not read registry value";
 	}
 
-	std::wcout << "value " << value << std::endl;
-	std::wcout << "value size" << value.size() << std::endl;
 	RegCloseKey(hKey);
-	/*size_t firstNull = value.find_first_of(L'\0');
-	if (firstNull != std::string::npos)
-		value.resize(firstNull);
-*/
-	std::cout << "value size " << value.size() << std::endl;
 	return value;
 }
