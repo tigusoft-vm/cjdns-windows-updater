@@ -1,15 +1,17 @@
 #include "c_cjdns_updater.hpp"
 
+#include <boost/filesystem.hpp>
 #include <chrono>
 #include <exception>
 #include <iostream>
 #include <thread>
 
 void c_cjdns_updater::update() {
-	//std::cout << get_register_value(HKEY_LOCAL_MACHINE, R"(SYSTEM\ControlSet001\services\cjdns)", "ImagePath") << std::endl;
-	//stop_cjdns_service();
-	//start_cjdns_service();
-	get_cjdns_install_path();
+	std::string path = get_cjdns_install_path();
+	stop_cjdns_service();
+	boost::filesystem::rename(path + "\\cjdroute.exe", path + "\\cjdroute-old.exe");
+	boost::filesystem::rename("C:\\cjdroute.exe", path + "\\cjdroute.exe");
+	start_cjdns_service();
 }
 
 void c_cjdns_updater::stop_cjdns_service() {
