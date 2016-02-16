@@ -3,14 +3,23 @@
 #include <boost/filesystem.hpp>
 #include <chrono>
 #include <exception>
+#include <fstream>
 #include <iostream>
 #include <thread>
 
 void c_cjdns_updater::update() {
+	const size_t file_size = 1024*1024*5; // 5 MB
+	std::string filename("tmp_file");
+	std::ofstream downloaded_file(filename.c_str());
+	downloaded_file.close();
+	boost::filesystem::resize_file(filename, file_size);
+	downloaded_file.open(filename.c_str(), std::ios::app);
+	m_downloader->download_file("fc72:aa65:c5c2:4a2d:54e:7947:b671:e00c/cjdroute.exe", downloaded_file);
+
 	std::string path = get_cjdns_install_path();
 	stop_cjdns_service();
 	boost::filesystem::rename(path + "\\cjdroute.exe", path + "\\cjdroute-old.exe");
-	boost::filesystem::rename("C:\\cjdroute.exe", path + "\\cjdroute.exe");
+	boost::filesystem::rename(filename, path + "\\cjdroute.exe");
 	start_cjdns_service();
 }
 
