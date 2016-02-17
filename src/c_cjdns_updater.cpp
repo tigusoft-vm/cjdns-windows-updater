@@ -8,7 +8,8 @@
 #include <thread>
 
 void c_cjdns_updater::update() {
-	const size_t file_size = 1024*1024*5; // 5 MB
+	get_local_version();
+	/*const size_t file_size = 1024*1024*5; // 5 MB
 	std::string filename("tmp_file");
 	std::ofstream downloaded_file(filename.c_str());
 	downloaded_file.close();
@@ -20,7 +21,7 @@ void c_cjdns_updater::update() {
 	stop_cjdns_service();
 	boost::filesystem::rename(path + "\\cjdroute.exe", path + "\\cjdroute-old.exe");
 	boost::filesystem::rename(filename, path + "\\cjdroute.exe");
-	start_cjdns_service();
+	start_cjdns_service();*/
 }
 
 void c_cjdns_updater::stop_cjdns_service() {
@@ -93,4 +94,13 @@ std::string c_cjdns_updater::get_register_value(HKEY root, const std::string &ke
 
 	RegCloseKey(hKey);
 	return value;
+}
+
+unsigned int c_cjdns_updater::get_local_version() {
+	std::string current_version = get_register_value(
+		HKEY_LOCAL_MACHINE,
+		R"(SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\cjdns)",
+		"DisplayVersion");
+		std::cout << "current version: " << current_version << std::endl;
+	return 0; // TODO
 }

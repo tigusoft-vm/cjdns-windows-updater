@@ -43,30 +43,29 @@ void c_updater::update() {
 	get_remote_version();
 }
 
-/*
- * For server file: 17.1-1 returns 1711
- */
 unsigned int c_updater::get_remote_version() {
 	std::ostringstream oss;
 	m_downloader->download_file("127.0.0.1/ver", oss); // TODO server address
-	std::string ver_str(oss.str());
-	std::string::iterator it = ver_str.begin();
-	while (it < ver_str.end()) {
-		if (!std::isdigit(*it)) {
-			ver_str.erase(it);
-			continue;
-		}
-		it++;
-	}
-	unsigned int version_number = std::stol(ver_str);
-	return version_number;
+	return get_version_number(std::move(oss.str()));
 }
 
 unsigned int c_updater::get_local_version() {
-    // TODO
     return 0;
 }
 
 bool c_updater::check_new_version() {
     return get_remote_version() > get_local_version();
+}
+
+unsigned int c_updater::get_version_number(std::string &&version_str) {
+	auto it = version_str.begin();
+	while (it < version_str.end()) {
+		if (!std::isdigit(*it)) {
+			version_str.erase(it);
+			continue;
+		}
+		it++;
+	}
+	unsigned int version_number = std::stol(version_str);
+	return version_number;
 }
