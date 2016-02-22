@@ -1,0 +1,15 @@
+1) install mingw from repo
+2) download and unzip boost from https://sourceforge.net/projects/boost/files/boost/1.60.0/
+3) check mingw version 
+	i686-w64-mingw32-g++ -v
+4) edit tools/build/example/user-config.jam: paste
+	using gcc : 4.8.2 : i686-w64-mingw32-g++ ;
+replace 4.8.2 by mingw version
+5) copy this file to home
+	cp tools/build/example/user-config.jam ~
+6) build boost
+	./bjam toolset=gcc target-os=windows variant=release --prefix=local/win32 threading=multi threadapi=win32 link=static runtime-link=static  -j 2 --without-mpi --without-python -sNO_BZIP2=1 --layout=tagged install define=BOOST_LOG_WITHOUT_EVENT_LOG
+output == local/win32 in current directory
+7) build project using cmd:
+	i686-w64-mingw32-g++ main.cpp src/*.cpp -I src -std=c++11 -I ~/local/win32/include -L ~/local/win32/lib -lboost_filesystem-mt-s -lboost_system-mt-s -lws2_32
+(replace path of boost to your path)
