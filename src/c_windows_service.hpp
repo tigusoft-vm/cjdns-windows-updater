@@ -12,13 +12,15 @@ class c_windows_service {
 		/**
 		 * start service @param service_name
 		 * @throw std::runtime_error if error
+		 * This function requires administrator permissions. Else throw std::runtime_error
 		 */
-		static void stop_cjdns_service(const std::string &service_name);
+		static void stop_service(const std::string &service_name);
 		/**
 		 * stop service @param service_name
 		 * @throw std::runtime_error if error
+		 * This function requires administrator permissions. Else throw std::runtime_error
 		 */
-		static void start_cjdns_service(const std::string &service_name);
+		static void start_service(const std::string &service_name);
 };
 
 } // namespace

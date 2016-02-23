@@ -1,6 +1,7 @@
 #if defined _WIN32 || defined __CYGWIN__
 
 #include "c_windows_service.hpp"
+#include "c_windows_utility.hpp"
 #include <chrono>
 #include <stdexcept>
 #include <thread>
@@ -9,7 +10,9 @@
 
 namespace win_utility {
 	
-void c_windows_service::stop_cjdns_service(const std::string &service_name) {
+void c_windows_service::stop_service(const std::string &service_name) {
+	if (!c_windows_utility::is_user_admin())
+		throw std::runtime_error("required administrator permissions");
 	SC_HANDLE SCManager = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 	if (GetLastError() == ERROR_ACCESS_DENIED) {
 		throw std::runtime_error("ERROR_ACCESS_DENIED");
@@ -34,7 +37,9 @@ void c_windows_service::stop_cjdns_service(const std::string &service_name) {
 	CloseServiceHandle(SHandle);
 }
 
-void c_windows_service::start_cjdns_service(const std::string &service_name) {
+void c_windows_service::start_service(const std::string &service_name) {
+	if (!c_windows_utility::is_user_admin())
+		throw std::runtime_error("required administrator permissions");
 	SC_HANDLE SCManager = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
 	if (GetLastError() == ERROR_ACCESS_DENIED) {
 		throw std::runtime_error("ERROR_ACCESS_DENIED");
