@@ -20,8 +20,6 @@ void c_http_downloader::download_file(const std::string &file_address, std::ostr
 		}
 
 		std::string file_path(it, file_address.end());
-		std::cout << "host_name " << host_name << std::endl;
-		std::cout << "file_path " << file_path << std::endl;
 
 		using namespace boost::asio;
 
