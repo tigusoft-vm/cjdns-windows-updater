@@ -26,31 +26,10 @@ c_updater::c_updater() :
 {
 }
 
-void c_updater::update() {
-// 	// load file
-// 	const std::string file_path("test.txt"); // TODO filename
-// 	std::ifstream file(file_path, std::ios::binary | std::ios::ate);
-// 	size_t file_size =  file.tellg();
-// 	file.close();
-// 	std::cout << "file_size: " << file_size << std::endl;
-//
-// 	std::string binary_data_from_file;
-// 	binary_data_from_file.reserve(file_size);
-//
-// 	file.open(file_path, std::ios::binary | std::ios::in);
-// 	file.read(&binary_data_from_file[0], file_size);
-
-	get_remote_version();
-}
-
 unsigned int c_updater::get_remote_version() {
 	std::ostringstream oss;
-	m_downloader->download_file("127.0.0.1/ver", oss); // TODO server address
+	m_downloader->download_file(m_server_address + "/ver", oss);
 	return get_version_number(std::move(oss.str()));
-}
-
-unsigned int c_updater::get_local_version() {
-    return 0;
 }
 
 bool c_updater::check_new_version() {
