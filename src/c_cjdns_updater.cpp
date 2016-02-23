@@ -2,21 +2,12 @@
 #include "c_windows_reg.hpp"
 #include "c_windows_service.hpp"
 
-#include <algorithm>
 #include <boost/filesystem.hpp>
 #include <chrono>
 #include <exception>
 #include <fstream>
 #include <iostream>
 #include <thread>
-
-
-#ifdef __CYGWIN__
-namespace std {
-unsigned int stol(const std::string &str); // source in c_updater.cpp
-} // namespace std
-#endif
-
 
 
 void c_cjdns_updater::update() {
@@ -49,7 +40,5 @@ unsigned int c_cjdns_updater::get_local_version() {
 		HKEY_LOCAL_MACHINE,
 		R"(SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\cjdns)",
 		"DisplayVersion");
-	auto new_end = std::remove_if(current_version_str.begin(), current_version_str.end(), [](char c){return !std::isdigit(c);});
-	current_version_str.erase(new_end, current_version_str.end());
-	return std::stol(current_version_str);
+	return get_version_number(std::move(current_version_str));
 }
