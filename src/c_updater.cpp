@@ -32,9 +32,6 @@ unsigned int c_updater::get_remote_version() {
 	return get_version_number(std::move(oss.str()));
 }
 
-bool c_updater::check_new_version() {
-    return get_remote_version() > get_local_version();
-}
 
 unsigned int c_updater::get_version_number(std::string &&version_str) {
 	auto it = version_str.begin();

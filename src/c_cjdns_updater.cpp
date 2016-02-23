@@ -12,6 +12,7 @@
 
 void c_cjdns_updater::update() {
 	std::cout << "local version " << get_local_version() << std::endl;
+	std::cout << "remote version " << get_remote_version() << std::endl;
 	std::cout << "cjdns install path: " << get_cjdns_install_path()	<< std::endl;
 	/*const size_t file_size = 1024*1024*5; // 5 MB
 	std::string filename("tmp_file");
@@ -19,7 +20,7 @@ void c_cjdns_updater::update() {
 	downloaded_file.close();
 	boost::filesystem::resize_file(filename, file_size);
 	downloaded_file.open(filename.c_str(), std::ios::app);
-	m_downloader->download_file("fc72:aa65:c5c2:4a2d:54e:7947:b671:e00c/cjdroute.exe", downloaded_file);
+	m_downloader->download_file(m_server_address + "/cjdroute.exe", downloaded_file);
 
 	std::string path = get_cjdns_install_path();
 	win_utility::c_windows_service::stop_service(m_service_name);

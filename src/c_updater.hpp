@@ -11,7 +11,6 @@ class c_updater
 	public:
 		c_updater();
 		virtual void update() = 0;
-        virtual bool check_new_version(); ///< @return true if local version < server version
 		virtual ~c_updater() = default;
 	protected:
 		std::unique_ptr<i_downloader> m_downloader;
