@@ -2,6 +2,7 @@
 #include "c_windows_reg.hpp"
 #include "c_windows_service.hpp"
 
+#include <algorithm>
 #include <boost/filesystem.hpp>
 #include <chrono>
 #include <exception>
@@ -9,8 +10,17 @@
 #include <iostream>
 #include <thread>
 
+
+#ifdef __CYGWIN__
+namespace std {
+unsigned int stol(const std::string &str); // source in c_updater.cpp
+} // namespace std
+#endif
+
+
+
 void c_cjdns_updater::update() {
-	get_local_version();
+	std::cout << "local version " << get_local_version() << std::endl;
 	std::cout << "cjdns install path: " << get_cjdns_install_path()	<< std::endl;
 	/*const size_t file_size = 1024*1024*5; // 5 MB
 	std::string filename("tmp_file");
@@ -35,10 +45,11 @@ std::string c_cjdns_updater::get_cjdns_install_path() {
 }
 
 unsigned int c_cjdns_updater::get_local_version() {
-	std::string current_version = win_utility::c_windows_reg::get_register_value(
+	std::string current_version_str = win_utility::c_windows_reg::get_register_value(
 		HKEY_LOCAL_MACHINE,
 		R"(SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\cjdns)",
 		"DisplayVersion");
-		std::cout << "current version: " << current_version << std::endl;
-	return 0; // TODO
+	auto new_end = std::remove_if(current_version_str.begin(), current_version_str.end(), [](char c){return !std::isdigit(c);});
+	current_version_str.erase(new_end, current_version_str.end());
+	return std::stol(current_version_str);
 }
