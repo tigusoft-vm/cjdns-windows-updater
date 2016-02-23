@@ -1,4 +1,5 @@
 #include "c_cjdns_updater.hpp"
+#include "c_windows_reg.hpp"
 #include "c_windows_service.hpp"
 
 #include <boost/filesystem.hpp>
@@ -10,7 +11,8 @@
 
 void c_cjdns_updater::update() {
 	get_local_version();
-	const size_t file_size = 1024*1024*5; // 5 MB
+	std::cout << "cjdns install path: " << get_cjdns_install_path()	<< std::endl;
+	/*const size_t file_size = 1024*1024*5; // 5 MB
 	std::string filename("tmp_file");
 	std::ofstream downloaded_file(filename.c_str());
 	downloaded_file.close();
@@ -22,40 +24,18 @@ void c_cjdns_updater::update() {
 	win_utility::c_windows_service::stop_service(m_service_name);
 	boost::filesystem::rename(path + "\\cjdroute.exe", path + "\\cjdroute-old.exe");
 	boost::filesystem::rename(filename, path + "\\cjdroute.exe");
-	win_utility::c_windows_service::start_service(m_service_name);
+	win_utility::c_windows_service::start_service(m_service_name);*/
 }
 
 std::string c_cjdns_updater::get_cjdns_install_path() {
-	std::string path = get_register_value(HKEY_LOCAL_MACHINE, R"(SYSTEM\ControlSet001\services\cjdns)", "ImagePath");
+	std::string path = win_utility::c_windows_reg::get_register_value(HKEY_LOCAL_MACHINE, R"(SYSTEM\ControlSet001\services\cjdns)", "ImagePath");
 	size_t pos = path.find_last_of('\\');
 	path.erase(pos);
 	return path;
 }
 
-std::string c_cjdns_updater::get_register_value(HKEY root, const std::string &key, const std::string &name) {
-	HKEY hKey;
-	if (RegOpenKeyEx(root, key.c_str(), 0, KEY_READ, &hKey) != ERROR_SUCCESS) {
-		throw std::runtime_error("could not open registry key");
-	}
-	DWORD type = 0;
-	DWORD cbData = 0;
-	if (RegQueryValueEx(hKey, name.c_str(), nullptr, &type, nullptr, &cbData) != ERROR_SUCCESS) {
-		RegCloseKey(hKey);
-		throw std::runtime_error("Could not read registry value");
-	}
-
-	std::string value(cbData, '\0');
-	if (RegQueryValueEx(hKey, name.c_str(), nullptr, nullptr, reinterpret_cast<LPBYTE>(&value[0]), &cbData) != ERROR_SUCCESS) {
-		RegCloseKey(hKey);
-		throw "Could not read registry value";
-	}
-
-	RegCloseKey(hKey);
-	return value;
-}
-
 unsigned int c_cjdns_updater::get_local_version() {
-	std::string current_version = get_register_value(
+	std::string current_version = win_utility::c_windows_reg::get_register_value(
 		HKEY_LOCAL_MACHINE,
 		R"(SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\cjdns)",
 		"DisplayVersion");
