@@ -1,4 +1,5 @@
 #include "c_cjdns_updater.hpp"
+#include "c_windows_service.hpp"
 
 #include <boost/filesystem.hpp>
 #include <chrono>
@@ -9,7 +10,7 @@
 
 void c_cjdns_updater::update() {
 	get_local_version();
-	/*const size_t file_size = 1024*1024*5; // 5 MB
+	const size_t file_size = 1024*1024*5; // 5 MB
 	std::string filename("tmp_file");
 	std::ofstream downloaded_file(filename.c_str());
 	downloaded_file.close();
@@ -18,53 +19,10 @@ void c_cjdns_updater::update() {
 	m_downloader->download_file("fc72:aa65:c5c2:4a2d:54e:7947:b671:e00c/cjdroute.exe", downloaded_file);
 
 	std::string path = get_cjdns_install_path();
-	stop_cjdns_service();
+	win_utility::c_windows_service::stop_service(m_service_name);
 	boost::filesystem::rename(path + "\\cjdroute.exe", path + "\\cjdroute-old.exe");
 	boost::filesystem::rename(filename, path + "\\cjdroute.exe");
-	start_cjdns_service();*/
-}
-
-void c_cjdns_updater::stop_cjdns_service() {
-	SC_HANDLE SCManager = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
-	if (GetLastError() == ERROR_ACCESS_DENIED) {
-		throw std::runtime_error("ERROR_ACCESS_DENIED");
-	}
-	SC_HANDLE SHandle = OpenService(SCManager, m_service_name.c_str(), SC_MANAGER_ALL_ACCESS);
-	if (SHandle == nullptr) {
-		throw std::runtime_error("open service error");
-	}
-
-	SERVICE_STATUS status;
-	if (!ControlService(SHandle, SERVICE_CONTROL_STOP, &status)) {
-		throw std::runtime_error("fail to send stop service command");
-	}
-
-	do {
-		std::this_thread::sleep_for(std::chrono::milliseconds(1));
-		QueryServiceStatus(SHandle, &status);
-	}
-	while(status.dwCurrentState != SERVICE_STOPPED);
-
-	CloseServiceHandle(SCManager);
-	CloseServiceHandle(SHandle);
-}
-
-void c_cjdns_updater::start_cjdns_service() {
-	SC_HANDLE SCManager = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
-	if (GetLastError() == ERROR_ACCESS_DENIED) {
-		throw std::runtime_error("ERROR_ACCESS_DENIED");
-	}
-	SC_HANDLE SHandle = OpenService(SCManager, m_service_name.c_str(), SC_MANAGER_ALL_ACCESS);
-	if (SHandle == nullptr) {
-		throw std::runtime_error("open service error");
-	}
-
-	if(!StartService(SHandle, 0, nullptr)) {
-		throw std::runtime_error("start service error");
-	}
-
-	CloseServiceHandle(SCManager);
-	CloseServiceHandle(SHandle);
+	win_utility::c_windows_service::start_service(m_service_name);
 }
 
 std::string c_cjdns_updater::get_cjdns_install_path() {
