@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
 	for (int i = 0; i < argc; ++i) {
 		std::cout << "i = " << i << " "<< argv[i] << std::endl;
 	}
-	
+
 	DWORD PID;
 	std::stringstream ss;
 	ss << argv[0];
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
 	std::cout << "b.exe: end of wait" << std::endl;
 	
 	boost::filesystem::rename("c.exe", "a.exe");
-	STARTUPINFO info={sizeof(info)};
+	STARTUPINFO info;
 	PROCESS_INFORMATION processInfo;
 	CreateProcess("a.exe", nullptr, nullptr, nullptr, true, 0, nullptr, nullptr, &info, &processInfo);
 	
