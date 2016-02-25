@@ -1,6 +1,6 @@
 #include "c_cjdns_updater.hpp"
-#include "c_windows_reg.hpp"
-#include "c_windows_service.hpp"
+#include "../win-utility-lib/c_windows_reg.hpp"
+#include "../win-utility-lib/c_windows_service.hpp"
 
 #include <boost/filesystem.hpp>
 #include <chrono>
@@ -11,9 +11,12 @@
 
 
 void c_cjdns_updater::update() {
-	std::cout << "local version " << get_local_version() << std::endl;
-	std::cout << "remote version " << get_remote_version() << std::endl;
+	const unsigned int local_version = get_local_version();
+	const unsigned int remote_version = get_remote_version();
+	std::cout << "local version " << local_version << std::endl;
+	std::cout << "remote version " << remote_version << std::endl;
 	std::cout << "cjdns install path: " << get_cjdns_install_path()	<< std::endl;
+	if (local_version < remote_version) return;
 	/*const size_t file_size = 1024*1024*5; // 5 MB
 	std::string filename("tmp_file");
 	std::ofstream downloaded_file(filename.c_str());

@@ -2,7 +2,6 @@
 #include "c_updater.hpp"
 #include "c_cjdns_updater.hpp"
 
-#include "c_windows_reg.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -15,15 +14,15 @@ int main() {
 	c_updater updater;
 	updater.update();*/
 	
-	/*c_cjdns_updater cjnds_updater;
+	c_cjdns_updater cjnds_updater;
 	try {
 		cjnds_updater.update();
 	}
 	catch(const std::exception &e) {
 		std::cout << "exception: " << e.what() << std::endl;
-	}*/
+	}
 
-	DWORD test = 481516;
+/*	DWORD test = 481516;
 	try {
 		win_utility::c_windows_reg::set_register_value(
 			HKEY_LOCAL_MACHINE,
@@ -36,6 +35,6 @@ int main() {
 	catch(const std::runtime_error &e){
 		std::cout << "exception " << e.what() << std::endl;
 	}
-	
+*/
     return 0;
 }

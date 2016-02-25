@@ -5,6 +5,7 @@
 
 class c_tiguup_updater : public c_updater {
 	public:
+		c_tiguup_updater();
 		virtual void update() override;
 };
 
