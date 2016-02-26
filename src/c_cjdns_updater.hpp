@@ -7,7 +7,7 @@
 #include <winreg.h>
 #include <winsvc.h>
 
-class c_cjdns_updater : public c_updater {
+class c_cjdns_updater final : public c_updater {
 	public:
 		void update() override;
 	private:

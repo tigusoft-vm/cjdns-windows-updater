@@ -3,7 +3,7 @@
 
 #include "c_updater.hpp"
 
-class c_tiguup_updater : public c_updater {
+class c_tiguup_updater final : public c_updater {
 	public:
 		c_tiguup_updater();
 		virtual void update() override;
