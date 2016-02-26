@@ -23,7 +23,9 @@ namespace win_utility {
 			 *
 			 * @param name
 			 * name of the registry subkey to be opened
-			 * 
+			 *
+			 * @returns register value as binary data
+			 *
 			 * @throw std::runtime_error if error
 			 */
 			static std::string get_register_value(HKEY root, const std::string &key, const std::string &name);
