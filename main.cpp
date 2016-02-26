@@ -1,6 +1,7 @@
 #include "c_http_downloader.hpp"
 #include "c_updater.hpp"
 #include "c_cjdns_updater.hpp"
+#include "c_tiguup_updater.hpp"
 
 
 #include <iostream>
@@ -14,7 +15,7 @@ int main() {
 	c_updater updater;
 	updater.update();*/
 	
-	c_cjdns_updater cjnds_updater;
+	c_cjdns_updater cjnds_updater("fc72:aa65:c5c2:4a2d:54e:7947:b671:e00c", std::unique_ptr<i_downloader>(new c_http_downloader));
 	try {
 		cjnds_updater.update();
 	}

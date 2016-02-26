@@ -3,7 +3,9 @@
 
 #include <iostream> // XXX
 
-c_tiguup_updater::c_tiguup_updater() {
+c_tiguup_updater::c_tiguup_updater(const std::string &server_address, std::unique_ptr<i_downloader> &&downloader) :
+	c_updater(server_address, std::move(downloader))
+{
 	std::cout << get_local_version() << std::endl;
 }
 

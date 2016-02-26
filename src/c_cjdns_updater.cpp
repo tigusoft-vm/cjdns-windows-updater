@@ -9,6 +9,10 @@
 #include <iostream>
 #include <thread>
 
+c_cjdns_updater::c_cjdns_updater(const std::string &server_address, std::unique_ptr<i_downloader> &&downloader) :
+	c_updater(server_address, std::move(downloader))
+{
+}
 
 void c_cjdns_updater::update() {
 	const unsigned int local_version = get_local_version();

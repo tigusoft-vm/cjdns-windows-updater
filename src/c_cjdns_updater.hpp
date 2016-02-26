@@ -9,6 +9,7 @@
 
 class c_cjdns_updater final : public c_updater {
 	public:
+		c_cjdns_updater(const std::string &server_address, std::unique_ptr<i_downloader> &&downloader);
 		void update() override;
 	private:
 		std::string get_cjdns_install_path(); ///< reutrn cjdns install path i.e. "C:\Program Files (x86)\cjdns"

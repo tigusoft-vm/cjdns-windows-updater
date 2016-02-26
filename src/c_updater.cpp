@@ -21,8 +21,9 @@ unsigned int stol(const std::string &str) {
 } // namespace std
 #endif
 
-c_updater::c_updater() :
-	m_downloader(new c_http_downloader)
+c_updater::c_updater(const std::string &server_address, std::unique_ptr<i_downloader> &&downloader) :
+	m_downloader(std::move(downloader)),
+	m_server_address(server_address)
 {
 }
 

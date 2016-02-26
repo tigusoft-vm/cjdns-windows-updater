@@ -6,10 +6,9 @@
 
 #include "i_downloader.hpp"
 
-class c_updater
-{
+class c_updater {
 	public:
-		c_updater();
+		c_updater(const std::string &server_address, std::unique_ptr<i_downloader> &&downloader);
 		virtual void update() = 0;
 		virtual ~c_updater() = default;
 	protected:
@@ -21,7 +20,7 @@ class c_updater
 		 * for @param version_str == 17.1-4-test returns 1714
 		 */
 		virtual unsigned int get_version_number(std::string &&version_str);
-		const std::string m_server_address = "fc72:aa65:c5c2:4a2d:54e:7947:b671:e00c";
+		const std::string m_server_address;
 };
 
 #endif // C_UPDATER_H

@@ -5,7 +5,7 @@
 
 class c_tiguup_updater final : public c_updater {
 	public:
-		c_tiguup_updater();
+		c_tiguup_updater(const std::string &server_address, std::unique_ptr<i_downloader> &&downloader);
 		virtual void update() override;
 	private:
 		 unsigned int get_local_version() override;

@@ -13,4 +13,4 @@ add_executable(tigu-up tigu_up_main.cpp)
 target_link_libraries(tigu-up boost_system boost_filesystem)
 
 add_executable(cjdns-windows-updater main.cpp)
-target_link_libraries(cjdns-windows-updater updater win-utility-lib boost_system pthread )
+target_link_libraries(cjdns-windows-updater updater win-utility-lib boost_system pthread)
