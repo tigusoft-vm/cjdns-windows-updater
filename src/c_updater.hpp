@@ -13,7 +13,7 @@ class c_updater {
 		virtual ~c_updater() = default;
 	protected:
 		std::unique_ptr<i_downloader> m_downloader;
-		virtual unsigned int get_remote_version(); ///< @returns version on server (server_address/ver)
+		virtual unsigned int get_remote_version() = 0; ///< @returns version on server (server_address/ver)
 		virtual unsigned int get_local_version() = 0; ///< @returns local version
 		/**
 		 * Remove non digit chars from @param version_str

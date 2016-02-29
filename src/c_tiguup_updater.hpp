@@ -9,6 +9,7 @@ class c_tiguup_updater final : public c_updater {
 		virtual void update() override;
 	private:
 		 unsigned int get_local_version() override;
+		 unsigned int get_remote_version() override;
 };
 
 #endif

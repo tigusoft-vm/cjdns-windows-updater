@@ -13,6 +13,7 @@ class c_cjdns_updater final : public c_updater {
 		void update() override;
 	private:
 		std::string get_cjdns_install_path(); ///< reutrn cjdns install path i.e. "C:\Program Files (x86)\cjdns"
+		virtual unsigned int get_remote_version() override;
 		unsigned int get_local_version() override;
 		const std::string m_service_name = "cjdns";
 };

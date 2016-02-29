@@ -7,6 +7,7 @@
 #include <exception>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <thread>
 
 c_cjdns_updater::c_cjdns_updater(const std::string &server_address, std::unique_ptr<i_downloader> &&downloader) :
@@ -41,6 +42,12 @@ std::string c_cjdns_updater::get_cjdns_install_path() {
 	size_t pos = path.find_last_of('\\');
 	path.erase(pos);
 	return path;
+}
+
+unsigned int c_cjdns_updater::get_remote_version() {
+	std::ostringstream oss;
+	m_downloader->download_file(m_server_address + "/ver", oss); // TODO filename on server
+	return get_version_number(std::move(oss.str()));
 }
 
 unsigned int c_cjdns_updater::get_local_version() {

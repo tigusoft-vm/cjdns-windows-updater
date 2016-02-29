@@ -27,11 +27,11 @@ c_updater::c_updater(const std::string &server_address, std::unique_ptr<i_downlo
 {
 }
 
-unsigned int c_updater::get_remote_version() {
+/*unsigned int c_updater::get_remote_version() {
 	std::ostringstream oss;
 	m_downloader->download_file(m_server_address + "/ver", oss);
 	return get_version_number(std::move(oss.str()));
-}
+}*/
 
 
 unsigned int c_updater::get_version_number(std::string &&version_str) {

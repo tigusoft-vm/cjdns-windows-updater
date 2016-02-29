@@ -15,9 +15,11 @@ int main() {
 	c_updater updater;
 	updater.update();*/
 	
-	c_cjdns_updater cjnds_updater("fc72:aa65:c5c2:4a2d:54e:7947:b671:e00c", std::unique_ptr<i_downloader>(new c_http_downloader));
+	//c_cjdns_updater cjnds_updater("fc72:aa65:c5c2:4a2d:54e:7947:b671:e00c", std::unique_ptr<i_downloader>(new c_http_downloader));
+	c_tiguup_updater tigu_updater("fc72:aa65:c5c2:4a2d:54e:7947:b671:e00c", std::unique_ptr<i_downloader>(new c_http_downloader));
 	try {
-		cjnds_updater.update();
+		//cjnds_updater.update();
+		tigu_updater.update();
 	}
 	catch(const std::exception &e) {
 		std::cout << "exception: " << e.what() << std::endl;

@@ -21,3 +21,7 @@ unsigned int c_tiguup_updater::get_local_version() {
 	unsigned int ret_ver = *reinterpret_cast<const DWORD*>(ver.data());
 	return ret_ver;
 }
+
+unsigned int c_tiguup_updater::get_remote_version() {
+	return 0; // TODO
+}
