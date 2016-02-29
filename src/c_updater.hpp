@@ -9,6 +9,10 @@
 class c_updater {
 	public:
 		c_updater(const std::string &server_address, std::unique_ptr<i_downloader> &&downloader);
+		/**
+		 * Check local and remote(server) version. If remote version > local version then update
+		 * else return;
+		 */
 		virtual void update() = 0;
 		virtual ~c_updater() = default;
 	protected:
