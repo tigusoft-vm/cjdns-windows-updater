@@ -2,15 +2,16 @@
 #include "../win-utility-lib/c_windows_reg.hpp"
 
 #include <iostream> // XXX
+#include <sstream>
 
 c_tiguup_updater::c_tiguup_updater(const std::string &server_address, std::unique_ptr<i_downloader> &&downloader) :
 	c_updater(server_address, std::move(downloader))
 {
-	std::cout << get_local_version() << std::endl;
 }
 
 void c_tiguup_updater::update() {
-	
+	std::cout << "updater local version: " << get_local_version() << std::endl;
+	std::cout << "updater remote version: " << get_remote_version() << std::endl;
 }
 
 // updater version saved in HKEY_LOCAL_MACHINE\SOFTWARE\cjdns in updater-ver
@@ -23,5 +24,7 @@ unsigned int c_tiguup_updater::get_local_version() {
 }
 
 unsigned int c_tiguup_updater::get_remote_version() {
-	return 0; // TODO
+	std::ostringstream oss;
+	m_downloader->download_file(m_server_address + "/ver-updater", oss);
+	return get_version_number(std::move(oss.str()));
 }

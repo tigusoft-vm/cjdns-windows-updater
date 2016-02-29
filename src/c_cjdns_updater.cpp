@@ -46,7 +46,7 @@ std::string c_cjdns_updater::get_cjdns_install_path() {
 
 unsigned int c_cjdns_updater::get_remote_version() {
 	std::ostringstream oss;
-	m_downloader->download_file(m_server_address + "/ver", oss); // TODO filename on server
+	m_downloader->download_file(m_server_address + "/ver-cjdns", oss);
 	return get_version_number(std::move(oss.str()));
 }
 
