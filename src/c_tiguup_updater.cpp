@@ -22,7 +22,8 @@ std::string to_string(T val) {
 
 
 c_tiguup_updater::c_tiguup_updater(const std::string &server_address, std::unique_ptr<i_downloader> &&downloader) :
-	c_updater(server_address, std::move(downloader))
+	c_updater(server_address, std::move(downloader)),
+	m_update_in_progress(false)
 {
 }
 
@@ -60,9 +61,11 @@ void c_tiguup_updater::update() {
 	int ret = CreateProcess("tigu-up.exe", pid_arr.get(), nullptr, nullptr, true, 0, nullptr, nullptr, &info, &processInfo);
 	std::cout << "ret " << ret << std::endl;
 	std::cout << "last error: " << GetLastError() << std::endl;
-	std::this_thread::sleep_for(std::chrono::seconds(5)); // TODO createprocess arguments mem leak
-	std::cout << "terminate" << std::endl;
-	//exit(0); // TODO
+	m_update_in_progress = true;
+}
+
+bool c_tiguup_updater::update_in_progress() {
+	return m_update_in_progress;
 }
 
 // updater version saved in HKEY_LOCAL_MACHINE\SOFTWARE\cjdns in updater-ver

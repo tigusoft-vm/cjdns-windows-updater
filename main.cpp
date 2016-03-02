@@ -20,6 +20,7 @@ int main() {
 	try {
 		//cjnds_updater.update();
 		tigu_updater.update();
+		if (tigu_updater.)
 	}
 	catch(const std::exception &e) {
 		std::cout << "exception: " << e.what() << std::endl;
