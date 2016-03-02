@@ -27,18 +27,23 @@ int main(int argc, char* argv[]) {
 	std::stringstream ss;
 	ss << argv[0];
 	ss >> PID;
-	
+
 	std::cout << "b.exe: wait for PID " << PID << std::endl;
-	
+
 	while (is_process_running(PID)) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
-	
+
 	std::cout << "b.exe: end of wait" << std::endl;
-	
+
+	boost::filesystem::rename("cjdns-windows-updater.exe", "cjdns-windows-updater-old.exe");
 	boost::filesystem::rename("updater_new.exe", "cjdns-windows-updater.exe");
+	boost::filesystem::permissions("cjdns-windows-updater.exe", boost::filesystem::owner_read | boost::filesystem::owner_exe);
 	STARTUPINFO info;
+	memset(&info, 0, sizeof(info)); // mingw warnings "missing initializer for member"
+	info.cb = sizeof(info);
 	PROCESS_INFORMATION processInfo;
+
 	CreateProcess("cjdns-windows-updater.exe", nullptr, nullptr, nullptr, true, 0, nullptr, nullptr, &info, &processInfo);
 	
 	std::cout << "b.exe: end" << std::endl;
