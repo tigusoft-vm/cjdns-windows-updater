@@ -20,7 +20,7 @@ BOOL is_process_running(DWORD pid) {
 int main(int argc, char* argv[]) {
 	std::cout << "b.exe argumentrs" << std::endl;
 	for (int i = 0; i < argc; ++i) {
-		std::cout << "i = " << i << " "<< argv[i] << std::endl;
+		std::cout << "i = " << i << " " << argv[i] << std::endl;
 	}
 
 	DWORD PID;
@@ -36,10 +36,10 @@ int main(int argc, char* argv[]) {
 	
 	std::cout << "b.exe: end of wait" << std::endl;
 	
-	boost::filesystem::rename("c.exe", "a.exe");
+	boost::filesystem::rename("updater_new.exe", "cjdns-windows-updater.exe");
 	STARTUPINFO info;
 	PROCESS_INFORMATION processInfo;
-	CreateProcess("a.exe", nullptr, nullptr, nullptr, true, 0, nullptr, nullptr, &info, &processInfo);
+	CreateProcess("cjdns-windows-updater.exe", nullptr, nullptr, nullptr, true, 0, nullptr, nullptr, &info, &processInfo);
 	
 	std::cout << "b.exe: end" << std::endl;
 }

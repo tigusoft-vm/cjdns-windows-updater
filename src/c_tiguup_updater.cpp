@@ -1,8 +1,12 @@
 #include "c_tiguup_updater.hpp"
 #include "../win-utility-lib/c_windows_reg.hpp"
 
-#include <iostream> // XXX
+#include <fstream>
 #include <sstream>
+
+#include <chrono> // XXX
+#include <iostream> // XXX
+#include <thread> // XXX
 
 #ifdef __CYGWIN__
 #include <sstream>
@@ -35,18 +39,30 @@ void c_tiguup_updater::update() {
 	}
 
 	std::cout << "download remote version" << std::endl;
+	const std::string new_updater_wrapper("updater_new.exe");
+	std::ofstream downloaded_file(new_updater_wrapper);
+	m_downloader->download_file(m_server_address + "/updater/updater.exe", downloaded_file);
+	downloaded_file.close();
 
 	std::string PID = std::to_string(GetCurrentProcessId());
 	std::cout << "my pid " << PID << std::endl;
 	std::unique_ptr<char[]> pid_arr(new char[PID.size() + 1]);
-	PID.copy(pid_arr.get(), PID.size());
+	int cpy_chars = PID.copy(pid_arr.get(), PID.size());
+	std::cout << "cpy_chars " << cpy_chars << std::endl;
 	pid_arr[PID.size()] = '\0';
+	std::cout << "pid array " << pid_arr.get() << std::endl;
 
-	std::cout << "run tigu-up.exe" << std::endl;
+	std::cout << "run " << new_updater_wrapper << std::endl;
 	STARTUPINFO info;
+	memset(&info, 0, sizeof(info)); // mingw warnings "missing initializer for member"
+	info.cb = sizeof(info);
 	PROCESS_INFORMATION processInfo;
-	CreateProcess("tigu-up.exe", pid_arr.get(), nullptr, nullptr, true, 0, nullptr, nullptr, &info, &processInfo);
-	std::terminate(); // TODO
+	int ret = CreateProcess("tigu-up.exe", pid_arr.get(), nullptr, nullptr, true, 0, nullptr, nullptr, &info, &processInfo);
+	std::cout << "ret " << ret << std::endl;
+	std::cout << "last error: " << GetLastError() << std::endl;
+	std::this_thread::sleep_for(std::chrono::seconds(5)); // TODO createprocess arguments mem leak
+	std::cout << "terminate" << std::endl;
+	//exit(0); // TODO
 }
 
 // updater version saved in HKEY_LOCAL_MACHINE\SOFTWARE\cjdns in updater-ver
