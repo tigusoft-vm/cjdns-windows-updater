@@ -64,7 +64,7 @@ void c_tiguup_updater::update() {
 	m_update_in_progress = true;
 }
 
-bool c_tiguup_updater::update_in_progress() {
+bool c_tiguup_updater::update_in_progress() noexcept {
 	return m_update_in_progress;
 }
 

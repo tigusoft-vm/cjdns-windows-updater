@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 
 
@@ -27,13 +28,6 @@ c_updater::c_updater(const std::string &server_address, std::unique_ptr<i_downlo
 {
 }
 
-/*unsigned int c_updater::get_remote_version() {
-	std::ostringstream oss;
-	m_downloader->download_file(m_server_address + "/ver", oss);
-	return get_version_number(std::move(oss.str()));
-}*/
-
-
 unsigned int c_updater::get_version_number(std::string &&version_str) {
 	auto it = version_str.begin();
 	while (it < version_str.end()) {
@@ -42,6 +36,9 @@ unsigned int c_updater::get_version_number(std::string &&version_str) {
 			continue;
 		}
 		it++;
+	}
+	if (version_str.empty()) {
+		throw std::invalid_argument("No digits in argument");
 	}
 	unsigned int version_number = std::stol(version_str);
 	return version_number;
