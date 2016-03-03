@@ -8,9 +8,22 @@
 #include <windows.h>
 #include <winsvc.h>
 
+#ifdef __CYGWIN__
+#include <sstream>
+namespace std {
+template <typename T>
+std::string to_string(T val) {
+    std::stringstream stream;
+    stream << val;
+    return stream.str();
+}
+} // namespace std
+#endif
+
 namespace win_utility {
 	
 void c_windows_service::stop_service(const std::string &service_name) {
+	SetLastError(ERROR_SUCCESS);
 	if (!c_windows_utility::is_user_admin())
 		throw std::runtime_error("required administrator permissions");
 	SC_HANDLE SCManager = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
@@ -27,6 +40,7 @@ void c_windows_service::stop_service(const std::string &service_name) {
 		throw std::runtime_error("fail to send stop service command");
 	}
 
+	// wait for service end
 	do {
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		QueryServiceStatus(SHandle, &status);
@@ -35,9 +49,14 @@ void c_windows_service::stop_service(const std::string &service_name) {
 
 	CloseServiceHandle(SCManager);
 	CloseServiceHandle(SHandle);
+
+	if (GetLastError()) {
+		throw std::runtime_error(std::string("last error (GetLastError()) ") + std::to_string(GetLastError()));
+	}
 }
 
 void c_windows_service::start_service(const std::string &service_name) {
+	SetLastError(ERROR_SUCCESS);
 	if (!c_windows_utility::is_user_admin())
 		throw std::runtime_error("required administrator permissions");
 	SC_HANDLE SCManager = OpenSCManager(nullptr, nullptr, SC_MANAGER_ALL_ACCESS);
@@ -55,6 +74,10 @@ void c_windows_service::start_service(const std::string &service_name) {
 
 	CloseServiceHandle(SCManager);
 	CloseServiceHandle(SHandle);
+
+	if (GetLastError()) {
+		throw std::runtime_error(std::string("last error (GetLastError()) ") + std::to_string(GetLastError()));
+	}
 }
 	
 } // namespace

@@ -27,6 +27,7 @@ namespace win_utility {
 			 * @returns register value as binary data
 			 *
 			 * @throw std::runtime_error if error
+			 * Exception safety: strong exception guarantee
 			 */
 			static std::string get_register_value(HKEY root, const std::string &key, const std::string &name);
 			
@@ -63,6 +64,7 @@ namespace win_utility {
 			 * terminating null character or characters.
 			 *
 			 * @throw std::runtime_error if error
+			 * Exception safety: strong exception guarantee
 			 * 
 			 * This function requires administrator permissions. Else throw std::runtime_error
 			 */
