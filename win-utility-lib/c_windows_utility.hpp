@@ -18,7 +18,8 @@ class c_windows_utility {
 		 * FALSE - Caller does not have Administrators local group.
 		 * 
 		 * @throw std::runtime_error
-		 * Exception safety: strong exception guarantee
+		 * \par Exception safety
+		 * strong exception guarantee
 		 * 
 		 */
 		static bool is_user_admin();

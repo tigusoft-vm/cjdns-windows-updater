@@ -11,8 +11,9 @@ class c_http_downloader final :  public i_downloader
 		 * @param out_stream out ref, must by ready for call write()
 		 * 
 		 * @throw boost::system::system_error if asio error
-		 * @throw std::invalid_argument if invalid @param file_address
-		 * Exception safety: basic exception guarantee (data in out_stream)
+		 * @throw std::invalid_argument if invalid file_address
+		 * \par Exception safety
+		 * basic exception guarantee (data in out_stream)
 		 */
 		virtual void download_file(const std::string &file_address, std::ostream &out_stream) override;
 	private:
