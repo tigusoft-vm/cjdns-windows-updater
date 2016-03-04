@@ -22,7 +22,8 @@ class c_windows_service {
 		 * stop service @param service_name
 		 * @throw std::runtime_error if error
 		 * This function requires administrator permissions. Else throw std::runtime_error
-		 * Exception safety: strong exception guarantee
+		 * \par Exception safety 
+		 * strong exception guarantee
 		 */
 		static void start_service(const std::string &service_name);
 };
